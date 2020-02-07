@@ -1,11 +1,20 @@
-from quart import Quart, request, Response
+from quart import Quart, request, Response, websocket
 import json
+import asyncio
+from functools import wraps
 
 from brewhouse_controller import BrewhouseController
 
 controller = BrewhouseController()
 
 app = Quart(__name__)
+        
+@app.websocket('/ws')
+async def ws():
+    while True:
+        new_data = controller.broadcast_data()
+        await websocket.send(json.dumps(new_data))
+        await asyncio.sleep(1)
 
 @app.route("/run", methods=["POST"])
 async def run():

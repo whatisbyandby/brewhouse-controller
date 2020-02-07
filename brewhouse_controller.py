@@ -17,6 +17,10 @@ class BrewhouseController:
         self.tick_interval = 1
         self.running = False
         self.loop_thread = Thread(target=self.main_loop)
+
+    def broadcast_data(self):
+        return {"data": 60, "more_data": "test"}
+        
         
     def set_steps(self, steps):
         self.steps = steps
