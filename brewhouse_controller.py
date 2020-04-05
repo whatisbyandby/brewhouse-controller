@@ -29,17 +29,17 @@ class BrewhouseController:
             minutes = str((time_remaining.seconds//60)%60).zfill(2)
             seconds = str(time_remaining.seconds % 60).zfill(2)
             return {
-                "current_temp": self.current_temp, 
+                "currentTemp": self.current_temp, 
                 "running": self.running,
-                "current_step": self.current_step,
-                "time_remaining": "{}:{}".format(minutes, seconds)
+                "currentStep": self.current_step,
+                "timeRemaining": "{}:{}".format(minutes, seconds)
                 }
         else:
             return {
-                "current_temp": self.current_temp,
+                "currentTemp": self.current_temp,
                 "running": self.running,
-                "current_step": self.current_step,
-                "time_remaining": None
+                "currentStep": self.current_step,
+                "timeRemaining": None
             }
         
         
@@ -79,7 +79,7 @@ class BrewhouseController:
 
     def start(self):
         if not self.running and self.current_step is not None:
-            self.step_end_time = datetime.now() + timedelta(minutes=self.current_step["hold_time"]) 
+            self.step_end_time = datetime.now() + timedelta(minutes=self.current_step["holdTime"]) 
             print(self.step_end_time)
             self.running = True
             return True
@@ -88,7 +88,6 @@ class BrewhouseController:
     
     def stop(self):
         if self.running:
-            self.current_temp = None
             self.current_step = None
             self.running = False
             self.loop_thread = Thread(target=self.main_loop)

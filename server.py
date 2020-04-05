@@ -1,8 +1,8 @@
 from quart import Quart, request, Response, websocket
 import json
 import asyncio
-from functools import wraps
 
+import settings
 from brewhouse_controller import BrewhouseController
 
 controller = BrewhouseController()
@@ -48,23 +48,6 @@ async def steps():
         steps = controller.set_step(await request.json)
         return Response(json.dumps(steps), mimetype="application/json")
 
-# @app.route("/step/<index>", methods=["GET", "PUT", "DELETE"])
-# async def step(index):
-#     if request.method == "GET":
-#         step = controller.get_step_by_index(int(index))
-#         return Response(json.dumps(step), mimetype="application/json")
-#     elif request.method == "POST":
-#         step = controller.update_step(int(index))
-#         return Response(json.dumps(step), mimetype="application/json")
-#     elif request.method == "DELETE":
-#         success = controller.delete_step(int(index))
-#         return Response(json.dumps(success), mimetype="application/json")
-
-# @app.route("/step/current", methods=["GET"])
-# async def current_step():
-#     current_step = controller.get_current_step()
-#     return Response(json.dumps(current_step), mimetype="application/json")
-    
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+    app.run(host=settings.HOST, port=settings.PORT)
